@@ -38,7 +38,7 @@ const Navbar = () => {
         </ul>
         <div>
             <FontAwesomeIcon icon={faSearch}/>
-            <input type="text"/>
+            <input type="text" style={{ borderRadius: '15px', padding: '5px 10px', border: '1px solid #ccc', outline: 'none' }}/>
         </div>
       </div>
     </div>

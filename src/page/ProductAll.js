@@ -16,8 +16,10 @@ const ProductAll = () => {
     },[])
   return (
     <div>
-        <ProductCard/>
-    </div>
+    {productList.map(product => (
+        <ProductCard key={product.id} product={product} />
+    ))}
+</div>
   )
 }
 
