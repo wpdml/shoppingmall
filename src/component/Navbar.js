@@ -27,6 +27,7 @@ const Navbar = () => {
         <img
           width={200}
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOSWOhkrtrLKgKz35SOCEsZV-v2q_yeKpMgw&s"
+          alt="H&M Logo"
         />
       </div>
       <div className="menu-area">
