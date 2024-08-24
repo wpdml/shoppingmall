@@ -1,29 +1,47 @@
 import React,{useEffect,useState} from 'react'
 import ProductCard from '../component/ProductCard'
-import {Container,Row,Col} from "react-bootstrap"
+import {Col} from "react-bootstrap"
+import { useSearchParams } from 'react-router-dom'
 
 const ProductAll = () => {
     const [productList, setProductList]=useState([])
-   
-    const getProducts=async()=>{
-        let url= `http://localhost:4000/products`
-        let response = await fetch(url)
+    const [query] = useSearchParams()
+
+    const getProducts = async () => {
+        let searchQuery = query.get('q' || "");
+        let categoryQuery = query.get("category") || "";
+
+        console.log("searchQuery", searchQuery);
+        let url = "https://my-json-server.typicode.com/wpdml/shoppingmall/products";
+
+        if (searchQuery && categoryQuery&&categoryQuery !== "All") {
+            url += `?q=${searchQuery}&category=${categoryQuery}`;
+        } else if (searchQuery) {
+            url += searchQuery? `?q=${searchQuery}`:``
+        } else if (categoryQuery && categoryQuery !== "All") {
+            url += `?category=${categoryQuery}`;
+        }     
+        console.log("Fetching URL:", url);
+        let response = await fetch(url);
         let data = await response.json();
-        setProductList(data)
-    }
+        console.log("Fetched data:", data);
+        setProductList(data);
+    };
 
     useEffect(()=>{
         getProducts()
-    },[])
+    },[query])
   return (
     <div>
-        <Container>
-            <Row>
-                {productList.map((item)=>(
-                <Col lg={3}><ProductCard item={item}/></Col>
-                ))}
-            </Row>
-        </Container>
+        <div className="product-grid">
+            {productList.length > 0 ? (
+                productList.map(item => (
+                    <ProductCard key={item.id} item={item} />
+                ))
+            ) : (
+                <p>No products found</p>
+            )}
+        </div>
 </div>
   )
 }

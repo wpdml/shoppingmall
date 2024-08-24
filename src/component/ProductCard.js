@@ -13,7 +13,7 @@ const ProductCard = ({item}) => {
       <div>{item?.title}</div>
       <div>{item?.price}</div>
       <div>{item?.new === true?"New product":""}</div>
-    </div>
+      </div>
   )
 }
 

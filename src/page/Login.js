@@ -10,11 +10,11 @@ const Login = ({setAuthenticate}) => {
         navigate("/")
         }
   return (
-    <Container>
+    <Container className="container-center">
       <Form onSubmit={(event)=>loginUser(event)}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control type="email" placeholder="Enter email" className="login-container"/>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -22,14 +22,14 @@ const Login = ({setAuthenticate}) => {
  
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control type="password" placeholder="Password" className="password-container"/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
-        <Button variant="danger" type="submit">
+        <button className="btn-login">
           Login
-        </Button>
+        </button>
       </Form>
     </Container>
   );

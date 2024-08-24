@@ -7,7 +7,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null)
 
   const getProductDetail = async () => {
-    let url = `http://localhost:4000/products/${id}`;
+    let url = `https://my-json-server.typicode.com/wpdml/shoppingmall/products/${id}`;
     let response = await fetch(url)
     let data = await response.json()
     console.log(data)
@@ -18,12 +18,14 @@ const ProductDetail = () => {
     getProductDetail();
   }, []);
 
-  return <Container>
+  return <Container className="detail">
     <Row>
         <Col>
+        <div className="detail-img">
         <img src={product?.img}/>
+        </div>
         </Col>
-        <Col>
+        <Col className="detail-info">
         <div>{product?.title}</div>
         <div>{product?.price}</div>
         </Col>

@@ -4,49 +4,53 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
+const Navbar = ({ authenticate, setAuthenticate }) => {
+  const menuList = ["All", "Tops", "Bottoms", "Accessories", "Bags", "Shoes"];
 
-const Navbar = () => {
-  const menuList = [
-    "Women",
-    "Divided",
-    "Men",
-    "Newborn",
-    "Kids",
-    "H&M Home",
-    "Sale",
-    "Sustainability",
-  ];
+  const navigate = useNavigate();
 
-const navigate = useNavigate()
-const goToLogin=()=>{
-    navigate("/login")
-}
+  const goToLogin = () => {
+    if (authenticate) {
+      setAuthenticate(false);
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const search = (event) => {
+    if (event.key === "Enter") {
+      let keyword = event.target.value;
+      console.log("keyword", keyword);
+
+      navigate(`/?q=${keyword}`);
+    }
+  };
+
+  const handleMenuClick = (category) => {
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("category", category === "All" ? "" : category);
+    navigate(`/?${queryParams.toString()}`)
+  }
 
   return (
     <div>
-      <div class="login-button" onClick={goToLogin}>
-        <div>
-          <FontAwesomeIcon icon={faUser} />
-          <div>Login</div>
-        </div>
+      <div className="navbar">
+      <div className="search-box">
+        <FontAwesomeIcon icon={faSearch}/>
+        <input type="text" onKeyPress={(event) => search(event)} className="search-bar"/>
       </div>
-      <div className="nav-section">
-        <img
-          width={200}
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOSWOhkrtrLKgKz35SOCEsZV-v2q_yeKpMgw&s"
-          alt="H&M Logo"
-        />
+      <div className="login-button" onClick={goToLogin}>
+        <FontAwesomeIcon icon={faUser} className="user-icon" />
+        <div>{authenticate ? "Logout" : "Login"}</div>
+      </div>
       </div>
       <div className="menu-area">
         <ul className="menu-list">
           {menuList.map((menu) => (
-            <li>{menu}</li>
+            <li key={menu} onClick={()=> handleMenuClick(menu)}>{menu}</li>
           ))}
         </ul>
-        <div>
-            <FontAwesomeIcon icon={faSearch}/>
-            <input type="text" style={{ borderRadius: '15px', padding: '5px 10px', border: '1px solid #ccc', outline: 'none' }}/>
-        </div>
       </div>
     </div>
   );
